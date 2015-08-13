@@ -1,0 +1,21 @@
+{
+  "name": "thing-it-device-microcontroller",
+  "version": "0.0.1",
+  "description": "[thing-it-node] Device Plugin for Microcontroller like Arduino.",
+  "authors": "Marc Gille",
+  "license": "MIT, EPL",
+  "keywords": [
+    "IoT",
+    "thing-it",
+    "Art-Net",
+    "DMX",
+    "Lighting"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marcgille/thing-it-device-microcontroller"
+  },
+  "dependencies": {
+    "artnet": "^1.0.0"
+  }
+}
