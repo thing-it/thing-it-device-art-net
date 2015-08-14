@@ -1,6 +1,6 @@
 <table class="formTable" style="width: 100%;">
     <tr style="vertical-align: middle">
-        <td style="padding-left: 5px; width: 30px;">
+        <td style="padding-left: 5px; width: 50px;">
             <div id="right" class="circleButton" style="background-color: red;" ng-click="panel.callActorService(component, 'off' )">
                 <div><i class="fa fa-power-off"></i></div>
             </div>
@@ -11,7 +11,7 @@
                    ti-max="'100'"
                    ti-change="panel.callActorService(component, 'setIntensity', {intensity: component._state.intensity} )">
         </td>
-        <td style="width: 45px; padding-right: 10px;">
+        <td style="width: 50px; padding-right: 10px;">
             <ti-color-picker
                     ng-model="component._state.hex"></ti-color-picker>
         </td>
