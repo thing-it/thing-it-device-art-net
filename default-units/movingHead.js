@@ -14,6 +14,9 @@ module.exports = {
         }, {
             id: "changePan",
             label: "Change Pan"
+        }, , {
+            id: "setGobo",
+            label: "Set Gobo"
         }],
         state: [{
             id: "tilt",
@@ -117,6 +120,15 @@ function MovingHead() {
      */
     MovingHead.prototype.changeTilt = function (parameters) {
         this.state.tilt = parameters.tilt;
+
+        this.publishStateChange();
+    };
+
+    /**
+     *
+     */
+    MovingHead.prototype.setGobo = function (parameters) {
+        console.log("Set Gobo: " + parameters.gobo);
 
         this.publishStateChange();
     };

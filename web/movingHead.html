@@ -29,7 +29,7 @@
         <td>
             <div class="btn-group">
                 <a ui-turn-on='goboDropdown' class='btn'>
-                    <i class="fa fa-fa-futbol-o"></i>
+                    <i class="fa fa-futbol-o"></i>
                 </a>
                 <ul
                         class="dropdown-menu"
@@ -39,11 +39,10 @@
                         ui-show="goboDropdown"
                         ui-state="goboDropdown"
                         ui-turn-off="goboDropdown">
-
-                    <li><a>Gobo 1</a></li>
-                    <li><a>Gobo 2</a></li>
-                    <li><a>Gobo 3</a></li>
-                    <li><a>Gobo 4</a></li>
+                    <li><a ng-click="panel.callActorService(component, 'setGobo', {gobo: 1} )">Gobo 1</a></li>
+                    <li><a ng-click="panel.callActorService(component, 'setGobo', {gobo: 2} )">Gobo 2</a></li>
+                    <li><a ng-click="panel.callActorService(component, 'setGobo', {gobo: 3} )">Gobo 3</a></li>
+                    <li><a ng-click="panel.callActorService(component, 'setGobo', {gobo: 4} )">Gobo 4</a></li>
                 </ul>
             </div>
         </td>
