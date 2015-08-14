@@ -198,17 +198,12 @@ function RgbLed() {
      *
      */
     RgbLed.prototype.off = function () {
-        this.state = {
+        this.setState({
             red: 0,
             green: 0,
             blue: 0,
-            intensity: -100,
-            hex: "#000000",
-            effectiveHex: "#000000"
-        };
-
-        this.pushDmxState();
-        this.publishStateChange();
+            intensity: -100
+        });
     };
 
     /**
