@@ -22,8 +22,8 @@ module.exports = {
                 "dmxStartAddress": 4
             }
         }, {
-            id: "simpleLight1",
-            label: "Simple Light 1",
+            id: "simpleLight",
+            label: "Simple Light",
             type: "simpleLight",
             configuration: {
                 "dmxStartAddress": 7
@@ -35,7 +35,7 @@ module.exports = {
             configuration: {
                 "dmxStartAddress": 8
             }
-        },  {
+        }, {
             id: "movingHead",
             label: "Moving Head",
             type: "movingHead",
@@ -50,7 +50,8 @@ module.exports = {
         label: "Blackout",
         type: "script",
         content: {
-            script: ""
+            script: "artNetUniverse1.rgbLed1.off(); artNetUniverse1.rgbLed2.off();artNetUniverse1.simpleLight.off();" +
+            "artNetUniverse1.fogMachine.off();artNetUniverse1.movingHead.off();"
         }
     },
         {
@@ -67,6 +68,121 @@ module.exports = {
             type: "script",
             content: {
                 script: ""
+            }
+        }, {
+            id: "storyboard1",
+            label: "Storyboard 1",
+            description: "",
+            type: "storyboard",
+            content: {
+                easingInterval: 200,
+                timeline: [{
+                    timestamp: 0,
+                    entries: [{
+                        type: "actorStateChange",
+                        device: "artNetUniverse1",
+                        actor: "rgbLed1",
+                        state: {
+                            red: 255,
+                            green: 0,
+                            blue: 0,
+                            intensity: 0
+                        }
+                    }]
+                }, {
+                    timestamp: 5000,
+                    entries: [{
+                        type: "actorStateChange",
+                        device: "artNetUniverse1",
+                        actor: "rgbLed1",
+                        state: {
+                            red: 255,
+                            green: 0,
+                            blue: 255,
+                            intensity: 100
+                        },
+                        easing: "linear"
+                    }]
+
+                }, {
+                    timestamp: 6000,
+                    entries: [{
+                        type: "actorStateChange",
+                        device: "artNetUniverse1",
+                        actor: "rgbLed2",
+                        state: {
+                            red: 255,
+                            green: 0,
+                            blue: 0,
+                            intensity: 100
+                        }
+                    }]
+                }, {
+                    timestamp: 8000,
+                    entries: [{
+                        type: "actorStateChange",
+                        device: "artNetUniverse1",
+                        actor: "rgbLed1",
+                        state: {
+                            red: 255,
+                            green: 0,
+                            blue: 255,
+                            intensity: -100
+                        },
+                        easing: "linear"
+                    }]
+
+                }, {
+                    timestamp: 9000,
+                    entries: [{
+                        type: "actorStateChange",
+                        device: "artNetUniverse1",
+                        actor: "rgbLed1",
+                        state: {
+                            red: 0,
+                            green: 255,
+                            blue: 0,
+                            intensity: 0
+                        },
+                        easing: "linear"
+                    }, {
+                        type: "actorStateChange",
+                        device: "artNetUniverse1",
+                        actor: "rgbLed2",
+                        state: {
+                            red: 0,
+                            green: 0,
+                            blue: 255,
+                            intensity: 0
+                        },
+                        easing: "linear"
+                    }]
+                }, {
+                    timestamp: 11000,
+                    entries: [{
+                        type: "actorStateChange",
+                        device: "artNetUniverse1",
+                        actor: "simpleLight",
+                        state: {
+                            intensity: 100
+                        },
+                        easing: "linear"
+                    }, {
+                        type: "actorStateChange",
+                        device: "artNetUniverse1",
+                        actor: "fogMachine",
+                        state: {
+                            intensity: 0
+                        },
+                        easing: "linear"
+                    }]
+                }, {
+                    timestamp: 13000,
+                    entries: [{
+                        type: "nodeServiceCall",
+                        service: "blackout"
+                    }]
+                }]
             }
         }],
     eventProcessors: [],
