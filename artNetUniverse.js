@@ -36,7 +36,7 @@ module.exports = {
             }
         }]
     },
-    create: function (device) {
+    create: function () {
         return new ArtNetUniverse();
     }
 };

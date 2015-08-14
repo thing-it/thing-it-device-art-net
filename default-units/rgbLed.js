@@ -116,16 +116,18 @@ function RgbLed() {
             hex: "#000000"
         };
 
+        console.log("Nach state");
+
         if (!this.isSimulated()) {
             try {
-                this.logInfo("Device", this.device.artnet);
+                //this.logInfo("Device", this.device.artnet);
             } catch (error) {
                 console.trace(error);
 
                 this.device.node
                     .publishMessage("Cannot initialize "
-                    + self.device.id + "/" + self.id
-                    + ":" + x);
+                    + this.device.id + "/" + this.id
+                    + ":" + error);
             }
         }
 

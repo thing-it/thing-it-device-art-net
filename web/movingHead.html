@@ -1,0 +1,19 @@
+<table class="formTable" style="width: 100%;">
+    <tr style="vertical-align: middle">
+        <td style="width: 99%;">
+            <input ti-slider=""
+                   ti-model="component._state.pan" ti-min="'0'"
+                   ti-max="'100'"
+                   ti-change="panel.callDeviceService(component, 'changePan', {level: component._state.pan} )">
+        </td>
+    </tr>
+    <tr style="vertical-align: middle">
+        <td style="width: 99%;">
+            <input ti-slider=""
+                   ti-model="component._state.tilt" ti-min="'0'"
+                   ti-max="'100'"
+                   ti-change="panel.callDeviceService(component, 'changeTilt', {level: component._state.tilt} )">
+        </td>
+    </tr>
+</table>
+
