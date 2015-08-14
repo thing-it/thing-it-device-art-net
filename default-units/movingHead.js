@@ -6,7 +6,7 @@ module.exports = {
         family: "movingHead",
         deviceTypes: ["art-net/artNetUniverse"],
         services: [{
-            id: "changeTitle",
+            id: "changeTilt",
             label: "Change Tilt"
         }, {
             id: "changePan",

@@ -76,8 +76,6 @@ function FogMachine() {
      */
     FogMachine.prototype.setState = function (state) {
         this.state = state;
-        this.state.hex = rgbToHex(this.state.red, this.state.green,
-            this.state.blue);
 
         this.pushDmxState();
         this.publishStateChange();
@@ -88,9 +86,7 @@ function FogMachine() {
      */
     FogMachine.prototype.pushDmxState = function () {
         if (!this.simulated) {
-            this.device.universe.set(this.configuration.intensity
-        ])
-            ;
+            this.device.universe.set(this.configuration.dmxAddress, [this.state.intensity]);
         }
     };
 
