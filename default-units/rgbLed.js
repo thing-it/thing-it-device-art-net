@@ -198,6 +198,24 @@ function RgbLed() {
     /**
      *
      */
+    RgbLed.prototype.setIntensity = function (parameter) {
+        // TODO Wrong algorithm for color brightness
+
+        this.state = {
+            red: Math.min(this.state.red * parameter.intensity * 255 / 100, 255),
+            green: Math.min(this.state.green * parameter.intensity * 255 / 100, 255),
+            blue: Math.min(this.state.blue * parameter.intensity * 255 / 100, 255)
+        };
+
+        this.state.hex = rgbToHex(this.state.red, this.state.green, this.state.green);
+
+        this.pushDmxState();
+        this.publishStateChange();
+    };
+
+    /**
+     *
+     */
     RgbLed.prototype.color = function (parameters) {
         var rgb = hexToRgb(parameters.rgbColorHex);
 

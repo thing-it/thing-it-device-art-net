@@ -103,16 +103,10 @@ function FogMachine() {
     /**
      *
      */
-    FogMachine.prototype.setBlueValue = function (parameters) {
-        this.state = {
-            red: this.state.red,
-            green: this.state.green,
-            blue: Math.min(parameters.value, 255),
-            hex: rgbToHex(this.state.red, this.state.green, Math.min(
-                parameters.value, 255))
-        };
+    FogMachine.prototype.off = function () {
+        this.state.intensity = 0;
 
-        this.publishStateChange();
         this.pushDmxState();
+        this.publishStateChange();
     };
 };
