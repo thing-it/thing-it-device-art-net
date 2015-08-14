@@ -6,6 +6,9 @@ module.exports = {
         family: "movingHead",
         deviceTypes: ["art-net/artNetUniverse"],
         services: [{
+            id: "off",
+            label: "Off"
+        }, {
             id: "changeTilt",
             label: "Change Tilt"
         }, {
@@ -86,6 +89,16 @@ function MovingHead() {
      */
     MovingHead.prototype.setState = function (state) {
         this.state = state;
+
+        this.publishStateChange();
+    };
+
+    /**
+     *
+     */
+    MovingHead.prototype.off = function (parameters) {
+        this.state.pan = 0;
+        this.state.tilt = 0;
 
         this.publishStateChange();
     };

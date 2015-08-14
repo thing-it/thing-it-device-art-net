@@ -1,7 +1,7 @@
 {
   "name": "thing-it-device-art-net",
-  "version": "0.0.7",
-  "description": "[thing-it-node] Device Plugin for Microcontroller like Arduino.",
+  "version": "0.0.8",
+  "description": "[thing-it-node] Device Plugin for Art-Net Universes.",
   "authors": "Marc Gille",
   "license": "MIT, EPL",
   "keywords": [
