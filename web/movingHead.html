@@ -12,6 +12,10 @@
                    ti-max="'100'"
                    ti-change="panel.callActorService(component, 'changePan', {level: component._state.pan} )">
         </td>
+        <td style="width: 45px; padding-right: 10px;">
+            <ti-color-picker
+                    ng-model="component._state.hex"></ti-color-picker>
+        </td>
     </tr>
     <tr style="vertical-align: middle">
         <td style="padding-left: 5px; width: 30px;">
@@ -21,6 +25,28 @@
                    ti-model="component._state.tilt" ti-min="'0'"
                    ti-max="'100'"
                    ti-change="panel.callActorService(component, 'changeTilt', {level: component._state.tilt} )">
+        </td>
+        <td>
+            <div class="btn-group">
+                <a ui-turn-on='myDropdown' class='btn'>
+                    <i class="fa fa-ellipsis-v"></i>
+                </a>
+                <ul
+                        class="dropdown-menu"
+                        ui-outer-click="Ui.turnOff('myDropdown')"
+                        ui-outer-click-if="Ui.active('myDropdown')"
+                        role="menu"
+                        ui-show="myDropdown"
+                        ui-state="myDropdown"
+                        ui-turn-off="myDropdown">
+
+                    <li><a>Action</a></li>
+                    <li><a>Another action</a></li>
+                    <li><a>Something else here</a></li>
+                    <li class="divider"></li>
+                    <li><a>Separated link</a></li>
+                </ul>
+            </div>
         </td>
     </tr>
 </table>
