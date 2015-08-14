@@ -12,6 +12,17 @@ This allows you to
 
 by means of [thing-it-node](https://github.com/marcgille/thing-it-node) and [thing-it.com](http://www.thing-it.com).
 
+Using this plugin together on [thing-it-node](https://github.com/marcgille/thing-it-node) might be an attractive 
+alternative to commercial Apps as you only need
+
+* your DMX devices (lights, moving heads, fog machines) - you have and need anyways
+* your Art-Net Ethernet/DMX512 Bridge - which you also need for the commercial Apps
+* a Wifi Router - which you also need for the commercial Apps
+* your Phone or Pad - which you also need for the commercial Apps
+* a computer - which could be anything from a used laptop to a Raspberry Pi
+
+In other words: you get your Art-Net controller setup more or less for fee.
+
 ## Installation
 
 After you have 
