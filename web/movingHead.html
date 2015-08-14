@@ -1,18 +1,26 @@
 <table class="formTable" style="width: 100%;">
     <tr style="vertical-align: middle">
+        <td style="padding-left: 5px; width: 30px;">
+            <div id="right" class="circleButton" style="background-color: red;"
+                 ng-click="panel.callActorService(component, 'off' )">
+                <div><i class="fa fa-power-off"></i></div>
+            </div>
+        </td>
         <td style="width: 99%;">
             <input ti-slider=""
                    ti-model="component._state.pan" ti-min="'0'"
                    ti-max="'100'"
-                   ti-change="panel.callDeviceService(component, 'changePan', {level: component._state.pan} )">
+                   ti-change="panel.callActorService(component, 'changePan', {level: component._state.pan} )">
         </td>
     </tr>
     <tr style="vertical-align: middle">
+        <td style="padding-left: 5px; width: 30px;">
+        </td>
         <td style="width: 99%;">
             <input ti-slider=""
                    ti-model="component._state.tilt" ti-min="'0'"
                    ti-max="'100'"
-                   ti-change="panel.callDeviceService(component, 'changeTilt', {level: component._state.tilt} )">
+                   ti-change="panel.callActorService(component, 'changeTilt', {level: component._state.tilt} )">
         </td>
     </tr>
 </table>
