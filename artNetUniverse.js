@@ -55,13 +55,15 @@ function ArtNetUniverse() {
             deferred.resolve();
         } else {
             if (!artnet) {
-                artnet = require('artnet')({
-                    host: this.configuration.host,
-                    port: this.configuration.port,
-                    refreshInterval: this.configuration.refreshInterval,
-                    iface: this.configuration.host
-                });
+                artnet = require('artnet');
             }
+
+            this.universe = artnet({
+                host: this.configuration.host,
+                port: this.configuration.port,
+                refreshInterval: this.configuration.refreshInterval,
+                iface: this.configuration.host
+            });
 
             deferred.resolve();
         }

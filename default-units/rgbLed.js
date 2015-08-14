@@ -15,6 +15,9 @@ module.exports = {
             id: "blink",
             label: "Blink"
         }, {
+            id: "setIntensity",
+            label: "Set Intensity"
+        }, {
             id: "color",
             label: "Color",
             parameters: [{
@@ -81,26 +84,12 @@ module.exports = {
             }
         }],
         configuration: [{
-            label: "DMX Address (Red)",
-            id: "dmxAddressRed",
+            label: "DMX Start Address",
+            id: "dmxStartAddress",
             type: {
                 id: "integer"
             },
             defaultValue: "1"
-        }, {
-            label: "DMX Address (Green)",
-            id: "dmxAddressGreen",
-            type: {
-                id: "integer"
-            },
-            defaultValue: "2"
-        }, {
-            label: "DMX Address (Blue)",
-            id: "dmxAddressBlue",
-            type: {
-                id: "integer"
-            },
-            defaultValue: "3"
         }]
     },
     create: function () {
@@ -129,10 +118,11 @@ function RgbLed() {
 
         if (!this.isSimulated()) {
             try {
+                this.logInfo("Device", this.device.artnet);
             } catch (error) {
                 console.trace(error);
 
-                self.device.node
+                this.device.node
                     .publishMessage("Cannot initialize "
                     + self.device.id + "/" + self.id
                     + ":" + x);
@@ -156,30 +146,27 @@ function RgbLed() {
      */
     RgbLed.prototype.setState = function (state) {
         this.state = state;
-
         this.state.hex = rgbToHex(this.state.red, this.state.green,
             this.state.blue);
 
-        if (this.led) {
-            this.led.on();
-            this.led.color(this.state.hex);
-
-            if (this.state.blink) {
-                this.led.blink();
-            }
-        }
-
+        this.pushDmxState();
         this.publishStateChange();
     };
 
     /**
      *
      */
-    RgbLed.prototype.on = function () {
-        if (this.led) {
-            this.led.on();
+    RgbLed.prototype.pushDmxState = function () {
+        if (!this.simulated) {
+            this.device.universe.set(this.configuration.dmxStartAddress, [this.state.red, this.state.green,
+                this.state.blue]);
         }
+    };
 
+    /**
+     *
+     */
+    RgbLed.prototype.on = function () {
         this.state = {
             red: 255,
             green: 255,
@@ -187,6 +174,7 @@ function RgbLed() {
             hex: "#FFFFFF"
         };
 
+        this.pushDmxState();
         this.publishStateChange();
     };
 
@@ -194,10 +182,6 @@ function RgbLed() {
      *
      */
     RgbLed.prototype.off = function () {
-        if (this.led) {
-            this.led.stop().off();
-        }
-
         this.state = {
             red: 0,
             green: 0,
@@ -205,6 +189,7 @@ function RgbLed() {
             hex: "#000000"
         };
 
+        this.pushDmxState();
         this.publishStateChange();
     };
 
@@ -212,10 +197,6 @@ function RgbLed() {
      *
      */
     RgbLed.prototype.color = function (parameters) {
-        if (this.led) {
-            this.led.color(parameters.rgbColorHex);
-        }
-
         var rgb = hexToRgb(parameters.rgbColorHex);
 
         this.state = {
@@ -225,6 +206,7 @@ function RgbLed() {
             hex: parameters.rgbColorHex
         };
 
+        this.pushDmxState();
         this.publishStateChange();
     };
 
@@ -232,11 +214,6 @@ function RgbLed() {
      *
      */
     RgbLed.prototype.setRedValue = function (parameters) {
-        if (this.led) {
-            this.led.color(rgbToHex(Math.min(parameters.value, 255),
-                this.state.green, this.state.blue));
-        }
-
         this.state = {
             red: Math.min(parameters.value, 255),
             green: this.state.green,
@@ -245,6 +222,7 @@ function RgbLed() {
                 this.state.blue)
         };
 
+        this.pushDmxState();
         this.publishStateChange();
     };
 
@@ -252,11 +230,6 @@ function RgbLed() {
      *
      */
     RgbLed.prototype.setGreenValue = function (parameters) {
-        if (this.led) {
-            this.led.color(rgbToHex(this.state.red, Math.min(parameters.value,
-                255), this.state.blue));
-        }
-
         this.state = {
             red: this.state.red,
             green: Math.min(parameters.value, 255),
@@ -265,6 +238,7 @@ function RgbLed() {
                 this.state.blue)
         };
 
+        this.pushDmxState();
         this.publishStateChange();
     };
 
@@ -272,11 +246,6 @@ function RgbLed() {
      *
      */
     RgbLed.prototype.setBlueValue = function (parameters) {
-        if (this.led) {
-            this.led.color(rgbToHex(this.state.red, this.state.green, Math.min(
-                parameters.value, 255)));
-        }
-
         this.state = {
             red: this.state.red,
             green: this.state.green,
@@ -286,18 +255,16 @@ function RgbLed() {
         };
 
         this.publishStateChange();
+        this.pushDmxState();
     };
 
     /**
      *
      */
     RgbLed.prototype.blink = function () {
-        if (this.led) {
-            this.led.blink();
-        }
-
         this.state.blink = true;
 
+        this.pushDmxState();
         this.publishStateChange();
     };
 };

@@ -1,1 +1,15 @@
-<i class="fa fa-circle ledRgb" style="color: {{component._state.hex}};" title="{{component._state.hex}}"></i>
+<table class="formTable" style="width: 100%;">
+    <tr style="vertical-align: middle">
+        <td style="width: 45px; padding-right: 10px;">
+            <div style="background-color: {{component._state.hex}}; width: 30px; height: 30px; border: 1px solid #999999;"
+                 title="{{component._state.hex}}"></div>
+        </td>
+        <td style="width: 99%;">
+            <input ti-slider=""
+                   ti-model="component._state.level" ti-min="'0'"
+                   ti-max="'100'"
+                   ti-change="panel.callDeviceService(component, 'changeLevel', {level: component._state.level} )">
+        </td>
+    </tr>
+</table>
+
