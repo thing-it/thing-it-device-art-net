@@ -7,9 +7,9 @@
         </td>
         <td style="width: 99%;">
             <input ti-slider=""
-                   ti-model="component._state.level" ti-min="'0'"
+                   ti-model="component._state.intensity" ti-min="'0'"
                    ti-max="'100'"
-                   ti-change="panel.callActorService(component, 'changeLevel', {level: component._state.level} )">
+                   ti-change="panel.callActorService(component, 'setIntensity', {intensity: component._state.intensity} )">
         </td>
         <td style="width: 45px; padding-right: 10px;">
             <ti-color-picker
