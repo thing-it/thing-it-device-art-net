@@ -1,6 +1,6 @@
 {
   "name": "thing-it-device-art-net",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "description": "[thing-it-node] Device Plugin for Art-Net Universes.",
   "authors": "Marc Gille",
   "license": "MIT, EPL",
