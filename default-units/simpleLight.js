@@ -101,7 +101,7 @@ function SimpleLight() {
      *
      */
     SimpleLight.prototype.pushDmxState = function () {
-        if (!this.simulated) {
+        if (!this.isSimulated()) {
             this.device.universe.set(this.configuration.dmxAddress, [this.state.intensity]);
         }
     };

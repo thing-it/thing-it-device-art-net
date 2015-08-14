@@ -159,7 +159,7 @@ function RgbLed() {
      *
      */
     RgbLed.prototype.pushDmxState = function () {
-        if (!this.simulated) {
+        if (!this.isSimulated()) {
             this.device.universe.set(this.configuration.dmxStartAddress, [this.state.red, this.state.green,
                 this.state.blue]);
         }
