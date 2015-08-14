@@ -48,4 +48,4 @@ The <a href="./examples/configuration.js">sample configuration</a> specifies
 
 and would lead to a UI like
 
-<img src="./documentation/images/art-net-universe.png">
+<img src="./documentation/images/art-net-universe.png" style="width: 50%;">
