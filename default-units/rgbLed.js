@@ -12,9 +12,6 @@ module.exports = {
             id: "off",
             label: "Off"
         }, {
-            id: "blink",
-            label: "Blink"
-        }, {
             id: "setIntensity",
             label: "Set Intensity"
         }, {
@@ -59,12 +56,6 @@ module.exports = {
             }]
         }],
         state: [{
-            id: "blink",
-            label: "Blink",
-            type: {
-                id: "boolean"
-            }
-        }, {
             id: "red",
             label: "Red",
             type: {
@@ -81,6 +72,24 @@ module.exports = {
             label: "Blue",
             type: {
                 id: "integer"
+            }
+        }, {
+            id: "intensity",
+            label: "Intensity",
+            type: {
+                id: "integer"
+            }
+        }, {
+            id: "hex",
+            label: "Hex",
+            type: {
+                id: "string"
+            }
+        }, {
+            id: "effectiveHex",
+            label: "effectiveHex",
+            type: {
+                id: "string"
             }
         }],
         configuration: [{
@@ -113,7 +122,9 @@ function RgbLed() {
             red: 0,
             green: 0,
             blue: 0,
-            hex: "#000000"
+            intensity: 0,
+            hex: "#000000",
+            effectiveHex: 0
         };
 
         console.log("Nach state");
@@ -150,6 +161,7 @@ function RgbLed() {
         this.state = state;
         this.state.hex = rgbToHex(this.state.red, this.state.green,
             this.state.blue);
+        this.effectiveHex = shadeColor(this.state.hex, this.state.intensity);
 
         this.pushDmxState();
         this.publishStateChange();
@@ -173,7 +185,9 @@ function RgbLed() {
             red: 255,
             green: 255,
             blue: 255,
-            hex: "#FFFFFF"
+            intensity: 100,
+            hex: "#FFFFFF",
+            effectiveHex: "#FFFFFF"
         };
 
         this.pushDmxState();
@@ -188,7 +202,9 @@ function RgbLed() {
             red: 0,
             green: 0,
             blue: 0,
-            hex: "#000000"
+            intensity: -100,
+            hex: "#000000",
+            effectiveHex: "#000000"
         };
 
         this.pushDmxState();
@@ -199,18 +215,9 @@ function RgbLed() {
      *
      */
     RgbLed.prototype.setIntensity = function (parameter) {
-        // TODO Wrong algorithm for color brightness
+        this.state.intensity = parameter.instensity;
 
-        this.state = {
-            red: Math.min(this.state.red * parameter.intensity * 255 / 100, 255),
-            green: Math.min(this.state.green * parameter.intensity * 255 / 100, 255),
-            blue: Math.min(this.state.blue * parameter.intensity * 255 / 100, 255)
-        };
-
-        this.state.hex = rgbToHex(this.state.red, this.state.green, this.state.green);
-
-        this.pushDmxState();
-        this.publishStateChange();
+        this.setState(this.state);
     };
 
     /**
@@ -218,74 +225,48 @@ function RgbLed() {
      */
     RgbLed.prototype.color = function (parameters) {
         var rgb = hexToRgb(parameters.rgbColorHex);
-
-        this.state = {
+        this.setState({
             red: rgb.r,
             green: rgb.g,
             blue: rgb.b,
-            hex: parameters.rgbColorHex
-        };
-
-        this.pushDmxState();
-        this.publishStateChange();
+            intensity: this.state.intensity
+        });
     };
 
     /**
      *
      */
     RgbLed.prototype.setRedValue = function (parameters) {
-        this.state = {
-            red: Math.min(parameters.value, 255),
+        this.setState({
+            red: Math.max(0, Math.min(parameters.value, 255)),
             green: this.state.green,
             blue: this.state.blue,
-            hex: rgbToHex(Math.min(parameters.value, 255), this.state.green,
-                this.state.blue)
-        };
-
-        this.pushDmxState();
-        this.publishStateChange();
+            intensity: this.state.intensity
+        });
     };
 
     /**
      *
      */
     RgbLed.prototype.setGreenValue = function (parameters) {
-        this.state = {
+        this.setState({
             red: this.state.red,
-            green: Math.min(parameters.value, 255),
+            green: Math.max(0, Math.min(parameters.value, 255)),
             blue: this.state.blue,
-            hex: rgbToHex(this.state.red, Math.min(parameters.value, 255),
-                this.state.blue)
-        };
-
-        this.pushDmxState();
-        this.publishStateChange();
+            intensity: this.state.intensity
+        });
     };
 
     /**
      *
      */
     RgbLed.prototype.setBlueValue = function (parameters) {
-        this.state = {
+        this.setState({
             red: this.state.red,
             green: this.state.green,
-            blue: Math.min(parameters.value, 255),
-            hex: rgbToHex(this.state.red, this.state.green, Math.min(
-                parameters.value, 255))
-        };
-
-        this.publishStateChange();
-        this.pushDmxState();
-    };
-
-    /**
-     *
-     */
-    RgbLed.prototype.blink = function () {
-        this.state.blink = true;
-
-        this.pushDmxState();
-        this.publishStateChange();
+            blue: Math.max(0, Math.min(parameters.value, 255)),
+            intensity: this.state.intensity
+        });
     };
 };
 
@@ -322,3 +303,9 @@ function hexToRgb(hex) {
 function rgbToHex(r, g, b) {
     return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
 }
+
+function shadeColor(color, percent) {
+    var f = parseInt(color.slice(1), 16), t = percent < 0 ? 0 : 255, p = percent < 0 ? percent * -1 : percent, R = f >> 16, G = f >> 8 & 0x00FF, B = f & 0x0000FF;
+    return "#" + (0x1000000 + (Math.round((t - R) * p) + R) * 0x10000 + (Math.round((t - G) * p) + G) * 0x100 + (Math.round((t - B) * p) + B)).toString(16).slice(1);
+}
+
