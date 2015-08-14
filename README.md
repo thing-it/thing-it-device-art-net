@@ -21,7 +21,7 @@ alternative to commercial Apps as you only need
 * your Phone or Pad - which you also need for the commercial Apps
 * a computer - which could be anything from a used laptop to a Raspberry Pi
 
-In other words: you get a quite powerful Art-Net controller setup more or less for fee.
+In other words: you get a quite powerful Art-Net controller setup more or less for free.
 
 ## Installation
 
