@@ -127,8 +127,6 @@ function RgbLed() {
             effectiveHex: 0
         };
 
-        console.log("Nach state");
-
         if (!this.isSimulated()) {
             try {
                 //this.logInfo("Device", this.device.artnet);
