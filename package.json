@@ -1,9 +1,12 @@
 {
-  "name": "thing-it-device-art-net",
+  "name": "@thing-it/device-art-net",
   "version": "0.0.23",
   "description": "[thing-it-node] Device Plugin for Art-Net Universes.",
   "authors": "Marc Gille",
   "license": "MIT, EPL",
+  "scripts": {
+    "postversion": "git push && git push --tags && npm publish"
+  },
   "keywords": [
     "IoT",
     "thing-it",

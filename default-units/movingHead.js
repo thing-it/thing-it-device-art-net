@@ -14,7 +14,7 @@ module.exports = {
         }, {
             id: "changePan",
             label: "Change Pan"
-        }, , {
+        }, {
             id: "setGobo",
             label: "Set Gobo"
         }],
