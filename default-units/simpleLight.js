@@ -57,6 +57,12 @@ function SimpleLight() {
     SimpleLight.prototype.start = function () {
         var deferred = q.defer();
 
+        this.operationalState = {
+            status: 'PENDING',
+            message: 'Waiting for initialization...'
+        };
+        this.publishOperationalStateChange();
+
         this.state = {
             blink: false,
             intensity: 0
@@ -65,14 +71,32 @@ function SimpleLight() {
         if (!this.isSimulated()) {
             try {
                 //this.logInfo("Device", this.device.artnet);
+
+                this.operationalState = {
+                    status: 'OK',
+                    message: 'Simple Light successfully initialized'
+                }
+                this.publishOperationalStateChange();
             } catch (error) {
                 console.trace(error);
+
+                this.operationalState = {
+                    status: 'ERROR',
+                    message: 'Simple Light initialization error'
+                }
+                this.publishOperationalStateChange(); 
 
                 this.device.node
                     .publishMessage("Cannot initialize "
                     + this.device.id + "/" + this.id
                     + ":" + error);
             }
+        } else {
+            this.operationalState = {
+                status: 'OK',
+                message: 'Simple Light successfully initialized'
+            }
+            this.publishOperationalStateChange();
         }
 
         deferred.resolve();

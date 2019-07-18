@@ -118,6 +118,12 @@ function RgbLed() {
     RgbLed.prototype.start = function () {
         var deferred = q.defer();
 
+        this.operationalState = {
+            status: 'PENDING',
+            message: 'Waiting for initialization...'
+        };
+        this.publishOperationalStateChange();
+
         this.state = {
             red: 0,
             green: 0,
@@ -130,14 +136,33 @@ function RgbLed() {
         if (!this.isSimulated()) {
             try {
                 //this.logInfo("Device", this.device.artnet);
+
+                this.operationalState = {
+                    status: 'OK',
+                    message: 'LED (RGB) successfully initialized'
+                }
+                this.publishOperationalStateChange();
+
             } catch (error) {
                 console.trace(error);
+
+                this.operationalState = {
+                    status: 'ERROR',
+                    message: 'LED (RGB) initialization error'
+                }
+                this.publishOperationalStateChange(); 
 
                 this.device.node
                     .publishMessage("Cannot initialize "
                     + this.device.id + "/" + this.id
                     + ":" + error);
             }
+        } else {
+            this.operationalState = {
+                status: 'OK',
+                message: 'LED (RGB) successfully initialized'
+            }
+            this.publishOperationalStateChange();
         }
 
         deferred.resolve();

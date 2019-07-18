@@ -57,6 +57,12 @@ function MovingHead() {
     MovingHead.prototype.start = function () {
         var deferred = q.defer();
 
+        this.operationalState = {
+            status: 'PENDING',
+            message: 'Waiting for initialization...'
+        };
+        this.publishOperationalStateChange();
+
         this.state = {
             tilt: 0,
             pan: 0
@@ -65,14 +71,33 @@ function MovingHead() {
         if (!this.isSimulated()) {
             try {
                 //this.logInfo("Device", this.device.artnet);
+
+                this.operationalState = {
+                    status: 'OK',
+                    message: 'Moving Head successfully initialized'
+                }
+                this.publishOperationalStateChange(); 
+
             } catch (error) {
                 console.trace(error);
+
+                this.operationalState = {
+                    status: 'ERROR',
+                    message: 'Moving Head initialization error'
+                }
+                this.publishOperationalStateChange(); 
 
                 this.device.node
                     .publishMessage("Cannot initialize "
                     + this.device.id + "/" + this.id
                     + ":" + error);
             }
+        } else {
+            this.operationalState = {
+                status: 'OK',
+                message: 'Moving Head successfully initialized'
+            }
+            this.publishOperationalStateChange(); 
         }
 
         deferred.resolve();
